@@ -2,16 +2,14 @@
 session_start();
 include("koneksi.php");
 
-// Set error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Query untuk menyeleksi destinasi dengan kategori "pantai"
 $query = "SELECT d.*, dg.gambar as additional_image 
           FROM destinasi d 
           LEFT JOIN destinasi_gambar dg ON d.id = dg.destinasi_id 
           WHERE d.kategori = 'pantai'
-          GROUP BY d.id";  // Group by to get one record per destination
+          GROUP BY d.id";  
 $result = mysqli_query($koneksi, $query);
 
 if (!$result) {
@@ -26,7 +24,7 @@ if (!$result) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Beaches</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" /> <!-- Perbaikan path CSS -->
+    <link rel="stylesheet" type="text/css" href="styles.css" /> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 </head>
 
@@ -78,10 +76,8 @@ if (!$result) {
         <?php
         if (mysqli_num_rows($result) > 0):
             while ($row = mysqli_fetch_assoc($result)):
-                // Get the main image path
                 $main_image = '';
                 if (!empty($row['gambar'])) {
-                    // Check if the image path starts with 'uploads/'
                     if (strpos($row['gambar'], 'uploads/') === 0) {
                         $main_image = $row['gambar'];
                     } else {
@@ -173,7 +169,6 @@ if (!$result) {
     </footer>
 
     <script>
-        // Function to toggle the visibility of the dropdown menu
         function toggleDropdown() {
             const dropdownMenu = document.getElementById("dropdownMenu");
             if (dropdownMenu.style.display === "flex") {
@@ -183,7 +178,6 @@ if (!$result) {
             }
         }
 
-        // Close the dropdown menu when clicking outside
         document.addEventListener("click", function(e) {
             const dropdown = document.getElementById("dropdownMenu");
             const trigger = document.querySelector(".nav-item-with-icon");
