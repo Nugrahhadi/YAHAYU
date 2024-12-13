@@ -69,6 +69,9 @@ if (!$result) {
                         <a href="waterfalls.php" class="dropdown-item" role="menuitem">Waterfalls</a>
                         <a href="cultural-sites.php" class="dropdown-item" role="menuitem">Cultural Sites</a>
                         <a href="mountains.php" class="dropdown-item" role="menuitem">Mountains</a>
+                        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+                            <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <a href="myticket.php" class="nav-item">My Tiket</a>
@@ -137,7 +140,7 @@ if (!$result) {
             endwhile;
         else:
             ?>
-            <p class="no-data">No beach destinations available at the moment.</p>
+            <p class="no-data">No waterfalls destinations available at the moment.</p>
         <?php endif; ?>
     </section>
     <!-- Footer Section-->

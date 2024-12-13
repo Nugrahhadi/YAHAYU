@@ -46,6 +46,9 @@ if (!$result) {
                         <a href="waterfalls.php" class="dropdown-item" role="menuitem">Waterfalls</a>
                         <a href="cultural-sites.php" class="dropdown-item" role="menuitem">Cultural Sites</a>
                         <a href="mountains.php" class="dropdown-item" role="menuitem">Mountains</a>
+                        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+                            <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <a href="myticket.php" class="nav-item">My Tiket</a>
@@ -101,13 +104,20 @@ if (!$result) {
                     </div>
                     <div class="button">
                         <a href="detail_destinasi.php?id=<?php echo $row['id']; ?>">Explore More</a>
+                        <?php if ($role === 'admin'): ?>
+                            <a href="delete_destinasi.php?id=<?php echo $row['id']; ?>&source=<?php echo basename($_SERVER['PHP_SELF']); ?>"
+                                class="delete-btn"
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus destinasi ini?');">
+                                Delete
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php
             endwhile;
         else:
             ?>
-            <p class="no-data">No beach destinations available at the moment.</p>
+            <p class="no-data">No mountains destinations available at the moment.</p>
         <?php endif; ?>
     </section>
     <!-- Footer Section-->

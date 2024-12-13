@@ -9,7 +9,7 @@ $query = "SELECT d.*, dg.gambar as additional_image
           FROM destinasi d 
           LEFT JOIN destinasi_gambar dg ON d.id = dg.destinasi_id 
           WHERE d.kategori = 'gurun'
-          GROUP BY d.id"; 
+          GROUP BY d.id";
 $result = mysqli_query($koneksi, $query);
 
 if (!$result) {
@@ -24,7 +24,7 @@ if (!$result) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Beaches</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" /> 
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 </head>
 
@@ -46,6 +46,9 @@ if (!$result) {
                         <a href="waterfalls.php" class="dropdown-item" role="menuitem">Waterfalls</a>
                         <a href="cultural-sites.php" class="dropdown-item" role="menuitem">Cultural Sites</a>
                         <a href="mountains.php" class="dropdown-item" role="menuitem">Mountains</a>
+                        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+                            <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <a href="myticket.php" class="nav-item">My Tiket</a>
@@ -101,13 +104,20 @@ if (!$result) {
                     </div>
                     <div class="button">
                         <a href="detail_destinasi.php?id=<?php echo $row['id']; ?>">Explore More</a>
+                        <?php if ($role === 'admin'): ?>
+                            <a href="delete_destinasi.php?id=<?php echo $row['id']; ?>&source=<?php echo basename($_SERVER['PHP_SELF']); ?>"
+                                class="delete-btn"
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus destinasi ini?');">
+                                Delete
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php
             endwhile;
         else:
             ?>
-            <p class="no-data">No beach destinations available at the moment.</p>
+            <p class="no-data">No deserts destinations available at the moment.</p>
         <?php endif; ?>
     </section>
     <!-- Footer Section-->

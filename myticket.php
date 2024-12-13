@@ -418,7 +418,7 @@ $tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <a href="beaches.php">Beaches</a>
                     <a href="deserts.php">Deserts</a>
                     <a href="waterfalls.php">Waterfalls</a>
-                    <a href="culturalSites.php">Cultural Sites</a>
+                    <a href="cultural-sites.php">Cultural Sites</a>
                     <a href="mountains.php">Mountains</a>
                 </div>
 
@@ -438,13 +438,13 @@ $tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </div>
                     <div class="social-media">
                         <a href="#" class="social-link" aria-label="WhatsApp">
-                            <img src="Images/whatsapp.png" alt="WhatsApp">
+                            <img src="images/whatsapp.png" alt="WhatsApp">
                         </a>
                         <a href="#" class="social-link" aria-label="Instagram">
-                            <img src="Images/instagram.png" alt="Instagram">
+                            <img src="images/instagram.png" alt="Instagram">
                         </a>
                         <a href="#" class="social-link" aria-label="Twitter">
-                            <img src="Images/twitter.png" alt="Twitter">
+                            <img src="images/twitter.png" alt="Twitter">
                         </a>
                     </div>
                 </div>
