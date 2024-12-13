@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #ffd700;
+}
+
+/* Header Navigation */
+header {
+  background-color: transparent;
+  padding: 20px 0;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  list-style: none;
+}
+
+nav a {
+  color: #1e8c45;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Image Gallery */
+.image-gallery {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  margin: 40px 0;
+}
+
+.gallery-image {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-image img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.gallery-image img:hover {
+  transform: scale(1.05);
+}
+
+.main-gallery-image {
+  height: 400px;
+}
+
+/* Destination Info */
+.destination-title {
+  text-align: center;
+  font-size: 3rem;
+  color: #1e8c45;
+  margin: 40px 0;
+}
+
+.destination-description {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #444;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+}
+
+.destination-details {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 40px 0;
+}
+
+.detail-item {
+  padding: 10px 30px;
+  border: 2px solid #1e8c45;
+  border-radius: 30px;
+  color: #1e8c45;
+  font-weight: 600;
+}
+
+.book-button {
+  display: block;
+  width: fit-content;
+  margin: 40px auto;
+  padding: 15px 40px;
+  background-color: #1e8c45;
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  transition: transform 0.3s;
+}
+
+.book-button:hover {
+  transform: translateY(-3px);
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .image-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .destination-details {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .destination-title {
+    font-size: 2rem;
+  }
+}
