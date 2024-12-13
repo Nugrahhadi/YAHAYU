@@ -23,20 +23,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = $_POST['nama'];
     $email = $_POST['email'];
     $nomor_telepon = $_POST['nomor_telepon'];
-    $tanggal_lahir = $_POST['tanggal_lahir'];
+    $tanggal = $_POST['tanggal'];
+    $bulan = $_POST['bulan'];
+    $tahun = $_POST['tahun'];
 
-    // Update data ke database
-    $update_query = "UPDATE akun SET username = ?, nama = ?, email = ?, nomor_telepon = ?, tanggal_lahir = ? WHERE id = ?";
-    $update_stmt = mysqli_prepare($koneksi, $update_query);
-    mysqli_stmt_bind_param($update_stmt, "sssssi", $username, $nama, $email, $nomor_telepon, $tanggal_lahir, $user_id);
-
-    if (mysqli_stmt_execute($update_stmt)) {
-        $_SESSION['user']['nama'] = $nama;
-        $_SESSION['user']['email'] = $email;
-        header("Location: profile.php?success=1");
-        exit;
+    if (!checkdate($bulan, $tanggal, $tahun)) {
+        $error = "Tanggal lahir tidak valid!";
     } else {
-        $error = "Gagal memperbarui profil. Coba lagi!";
+        $tanggal_lahir = $tahun . '-' . str_pad($bulan, 2, '0', STR_PAD_LEFT) . '-' . str_pad($tanggal, 2, '0', STR_PAD_LEFT);
+
+        // Cek apakah ada password baru
+        $password = isset($_POST['password']) ? $_POST['password'] : '';
+        $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
+
+        // Validasi password dan konfirmasi password
+        if (!empty($password) && $password !== $confirm_password) {
+            $error = "Password dan konfirmasi password tidak cocok!";
+        } else {
+            // Jika password baru diisi, enkripsi password dan update
+            if (!empty($password)) {
+                $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+                $update_query = "UPDATE akun SET username = ?, nama = ?, email = ?, nomor_telepon = ?, tanggal_lahir = ?, password = ? WHERE id = ?";
+                $update_stmt = mysqli_prepare($koneksi, $update_query);
+                mysqli_stmt_bind_param($update_stmt, "ssssssi", $username, $nama, $email, $nomor_telepon, $tanggal_lahir, $password_hashed, $user_id);
+            } else {
+                // Jika tidak mengganti password, update hanya data lainnya
+                $update_query = "UPDATE akun SET username = ?, nama = ?, email = ?, nomor_telepon = ?, tanggal_lahir = ? WHERE id = ?";
+                $update_stmt = mysqli_prepare($koneksi, $update_query);
+                mysqli_stmt_bind_param($update_stmt, "sssssi", $username, $nama, $email, $nomor_telepon, $tanggal_lahir, $user_id);
+            }
+
+            if (mysqli_stmt_execute($update_stmt)) {
+                $_SESSION['user']['nama'] = $nama;
+                $_SESSION['user']['email'] = $email;
+                header("Location: profile.php?success=1");
+                exit;
+            } else {
+                $error = "Gagal memperbarui profil. Coba lagi!";
+            }
+        }
     }
 }
 ?>
@@ -171,6 +196,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 100%;
         }
 
+        .date-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
         .success-message {
             background: #d4edda;
             color: #155724;
@@ -301,7 +332,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label for="tanggal_lahir">Tanggal Lahir</label>
-                    <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="<?php echo htmlspecialchars($profile['tanggal_lahir']); ?>" required>
+                    <div class="date-group">
+                        <input type="number" name="tanggal" placeholder="Tanggal" min="1" max="31" value="<?php echo htmlspecialchars(explode('-', $profile['tanggal_lahir'])[2]); ?>" required>
+                        <input type="number" name="bulan" placeholder="Bulan" min="1" max="12" value="<?php echo htmlspecialchars(explode('-', $profile['tanggal_lahir'])[1]); ?>" required>
+                        <input type="number" name="tahun" placeholder="Tahun" min="1900" max="2024" value="<?php echo htmlspecialchars(explode('-', $profile['tanggal_lahir'])[0]); ?>" required>
+                    </div>
+                </div>
+
+                <!-- password and confirmation -->
+                <div class="form-group">
+                    <label for="password">Password Baru</label>
+                    <input type="password" id="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Konfirmasi Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Konfirmasi password baru">
                 </div>
 
                 <button type="submit" name="submit">Perbarui Profil</button>
