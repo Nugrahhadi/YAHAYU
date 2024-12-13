@@ -9,51 +9,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     $nomor_telepon = $_POST['nomor_telepon'];
-    $tanggal_lahir = $_POST['tanggal_lahir'];
-    $role = "peserta"; // Role default 'peserta'
 
-    if ($password !== $confirm_password) {
-        $error_message = "Password dan konfirmasi password tidak cocok.";
+    $tanggal = $_POST['tanggal'];
+    $bulan = $_POST['bulan'];
+    $tahun = $_POST['tahun'];
+
+    if (!checkdate($bulan, $tanggal, $tahun)) {
+        $error_message = "Tanggal lahir tidak valid!";
     } else {
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $tanggal_lahir = $tahun . '-' . str_pad($bulan, 2, '0', STR_PAD_LEFT) . '-' . str_pad($tanggal, 2, '0', STR_PAD_LEFT);
 
-        // Cek apakah email sudah terdaftar
-        $check_email = "SELECT id FROM akun WHERE email = ?";
-        $stmt_check = mysqli_prepare($koneksi, $check_email);
-        mysqli_stmt_bind_param($stmt_check, "s", $email);
-        mysqli_stmt_execute($stmt_check);
-        mysqli_stmt_store_result($stmt_check);
-
-        if (mysqli_stmt_num_rows($stmt_check) > 0) {
-            $error_message = "Email sudah terdaftar. Gunakan email lain.";
+        if ($password !== $confirm_password) {
+            $error_message = "Password dan konfirmasi password tidak cocok.";
         } else {
-            // Jika email belum terdaftar, masukkan data pengguna baru
-            $sql = "INSERT INTO akun (username, nama, email, password, nomor_telepon, tanggal_lahir, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            $stmt = mysqli_prepare($koneksi, $sql);
-            mysqli_stmt_bind_param($stmt, "sssssss", $username, $nama, $email, $password_hash, $nomor_telepon, $tanggal_lahir, $role);
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            if (mysqli_stmt_execute($stmt)) {
-                // Ambil data pengguna yang baru didaftarkan
-                $user_id = mysqli_insert_id($koneksi); // Ambil ID pengguna yang baru
-                $_SESSION['user'] = [
-                    'id' => $user_id,
-                    'username' => $username,
-                    'nama' => $nama,
-                    'email' => $email,
-                    'nomor_telepon' => $nomor_telepon,
-                    'tanggal_lahir' => $tanggal_lahir,
-                    'role' => $role
-                ];
+            // Cek apakah email sudah terdaftar
+            $check_email = "SELECT id FROM akun WHERE email = ?";
+            $stmt_check = mysqli_prepare($koneksi, $check_email);
+            mysqli_stmt_bind_param($stmt_check, "s", $email);
+            mysqli_stmt_execute($stmt_check);
+            mysqli_stmt_store_result($stmt_check);
 
-                // Redirect ke halaman utama
-                header("Location: index.php");
-                exit;
+            if (mysqli_stmt_num_rows($stmt_check) > 0) {
+                $error_message = "Email sudah terdaftar. Gunakan email lain.";
             } else {
-                $error_message = "Error: " . mysqli_error($koneksi);
+                $role = "peserta"; // Role default 'peserta'
+                // Jika email belum terdaftar, masukkan data pengguna baru
+                $sql = "INSERT INTO akun (username, nama, email, password, nomor_telepon, tanggal_lahir, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $stmt = mysqli_prepare($koneksi, $sql);
+                mysqli_stmt_bind_param($stmt, "sssssss", $username, $nama, $email, $password_hash, $nomor_telepon, $tanggal_lahir, $role);
+
+                if (mysqli_stmt_execute($stmt)) {
+                    // Ambil data pengguna yang baru didaftarkan
+                    $user_id = mysqli_insert_id($koneksi); // Ambil ID pengguna yang baru
+                    $_SESSION['user'] = [
+                        'id' => $user_id,
+                        'username' => $username,
+                        'nama' => $nama,
+                        'email' => $email,
+                        'nomor_telepon' => $nomor_telepon,
+                        'tanggal_lahir' => $tanggal_lahir,
+                        'role' => $role
+                    ];
+
+                    // Redirect ke halaman utama
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    $error_message = "Error: " . mysqli_error($koneksi);
+                }
+                mysqli_stmt_close($stmt);
             }
-            mysqli_stmt_close($stmt);
+            mysqli_stmt_close($stmt_check);
         }
-        mysqli_stmt_close($stmt_check);
     }
     mysqli_close($koneksi);
 }
@@ -271,7 +280,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if (isset($error_message)): ?>
                 <p class="error-message"><?php echo $error_message; ?></p>
             <?php endif; ?>
-            <form action="register.php" method="POST">
+            <form action="register_pengguna.php" method="POST">
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
                     <input type="text" id="nama" name="nama" required>
@@ -295,9 +304,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="tanggal_lahir">Tanggal Lahir</label>
                     <div class="date-group">
-                        <input type="number" placeholder="Tanggal" min="1" max="31" required>
-                        <input type="number" placeholder="Bulan" min="1" max="12" required>
-                        <input type="number" placeholder="Tahun" min="1900" max="2024" required>
+                        <input type="number" name="tanggal" placeholder="Tanggal" min="1" max="31" required>
+                        <input type="number" name="bulan" placeholder="Bulan" min="1" max="12" required>
+                        <input type="number" name="tahun" placeholder="Tahun" min="1900" max="2024" required>
                     </div>
                 </div>
 
