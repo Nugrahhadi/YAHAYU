@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 8px 0;
         }
 
-        /* Edit profile button */
+        /* profile button */
         .edit-profile-btn {
             background-color: #1e8c45;
             color: white;
@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #f5c6cb;
         }
 
-        /* Edit form styles */
+        /* form styles */
         .edit-form {
             max-width: 1000px;
             margin: 0 auto;

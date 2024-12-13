@@ -140,9 +140,6 @@ $tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
             color: white;
         }
 
-        /* .ticket-info {
-            padding: 25px;
-        } */
         .ticket-info {
             flex: 2;
             padding: 25px;
@@ -171,13 +168,6 @@ $tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
             padding-top: 25px;
             border-top: 2px dashed #ffd700;
         }
-
-        /* .ticket-actions {
-            padding: 20px;
-            text-align: center;
-            background: rgba(248, 249, 250, 0.5);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        } */
 
         .ticket-actions {
             flex: 1;

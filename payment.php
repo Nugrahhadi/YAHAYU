@@ -34,7 +34,7 @@ if (isset($_GET['booking_id'])) {
     exit();
 }
 
-// Handle pembayaran sekarang
+// pembayaran sekarang
 if (isset($_POST['pay_now'])) {
     $update_query = "UPDATE bookings 
                     SET status = 'confirmed',
@@ -53,7 +53,7 @@ if (isset($_POST['pay_now'])) {
     }
 }
 
-// Handle bayar nanti
+// bayar nanti
 if (isset($_POST['pay_later'])) {
     $update_query = "UPDATE bookings 
                     SET status = 'pending',

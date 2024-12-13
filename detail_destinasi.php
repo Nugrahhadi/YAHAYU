@@ -14,14 +14,12 @@ if (isset($_GET['id'])) {
     $result = mysqli_stmt_get_result($stmt);
     $destinasi = mysqli_fetch_assoc($result);
 
-    // Jika destinasi tidak ditemukan, redirect ke halaman destinasi
     if (!$destinasi) {
-        header("Location: destinations.php");
+        header("Location: index.php");
         exit;
     }
 } else {
-    // Jika tidak ada ID destinasi, redirect ke halaman destinasi
-    header("Location: destinations.php");
+    header("Location: index.php");
     exit;
 }
 
@@ -188,7 +186,6 @@ $gambar_tambahan = mysqli_fetch_all($result_gambar, MYSQLI_ASSOC);
     </footer>
 
     <script>
-        // Function to toggle the visibility of the dropdown menu
         function toggleDropdown() {
             const dropdownMenu = document.getElementById("dropdownMenu");
             if (dropdownMenu.style.display === "flex") {
@@ -198,7 +195,6 @@ $gambar_tambahan = mysqli_fetch_all($result_gambar, MYSQLI_ASSOC);
             }
         }
 
-        // Close the dropdown menu when clicking outside
         document.addEventListener("click", function(e) {
             const dropdown = document.getElementById("dropdownMenu");
             const trigger = document.querySelector(".nav-item-with-icon");

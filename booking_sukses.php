@@ -195,7 +195,6 @@ if (!$booking) {
     </div>
 
     <script>
-        // Redirect prevention after successful payment
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }

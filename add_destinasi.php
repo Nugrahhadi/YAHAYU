@@ -110,7 +110,6 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Destination</title>
     <style>
-        /* ... style yang sudah ada ... */
         .image-preview {
             margin: 10px 0;
             display: flex;

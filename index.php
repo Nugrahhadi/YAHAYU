@@ -2,12 +2,10 @@
 session_start();
 include("koneksi.php");
 
-// Periksa koneksi
 if (!$koneksi) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
 
-// Query untuk destinasi
 $query = "SELECT * FROM destinasi LIMIT 3";
 $result = mysqli_query($koneksi, $query);
 
@@ -97,10 +95,8 @@ if (!$result) {
             <h2 id="destinations-heading" class="destinations-title">TOP DESTINATIONS</h2>
             <p class="destinations-subtitle">Where Will Your Next Adventure Take You?</p>
         </div>
-        <!-- Tambahkan data destinasi dari database -->
         <div class="destinations-grid">
             <?php
-            // Query sudah benar menggunakan $koneksi (bukan $connection)
             $query = "SELECT * FROM destinasi LIMIT 3";
             $result = mysqli_query($koneksi, $query);
 

@@ -21,7 +21,7 @@ $role = $_SESSION['user']['role'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Destinations - YaHaYu</title>
-    <link rel="stylesheet" href="destinasi.css"> <!-- Tautkan CSS -->
+    <link rel="stylesheet" href="destinasi.css"> 
 </head>
 
 <body>

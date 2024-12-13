@@ -34,7 +34,6 @@ if (!$booking) {
     exit();
 }
 
-// Handle form submission
 if (isset($_POST['process_payment'])) {
     $payment_token = 'PAY-' . time() . '-' . $booking_id;
 
@@ -276,23 +275,18 @@ if (isset($_POST['process_payment'])) {
         let selectedPayment = '';
 
         function selectPayment(bank) {
-            // Remove active class from all options
             document.querySelectorAll('.payment-option').forEach(option => {
                 option.classList.remove('active');
             });
 
-            // Hide all payment details
             document.querySelectorAll('.payment-details').forEach(details => {
                 details.style.display = 'none';
             });
 
-            // Add active class to selected option
             event.currentTarget.classList.add('active');
 
-            // Show selected payment details
             document.getElementById(bank + '-details').style.display = 'block';
 
-            // Update hidden input
             document.getElementById('selected_bank').value = bank;
             selectedPayment = bank;
         }
@@ -302,8 +296,7 @@ if (isset($_POST['process_payment'])) {
                 alert('Nomor rekening berhasil disalin!');
             });
         }
-
-        // Validate form submission
+        
         document.getElementById('paymentForm').onsubmit = function(e) {
             if (!selectedPayment) {
                 e.preventDefault();

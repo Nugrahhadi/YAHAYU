@@ -76,10 +76,8 @@ if (!$result) {
         <?php
         if (mysqli_num_rows($result) > 0):
             while ($row = mysqli_fetch_assoc($result)):
-                // Get the main image path
                 $main_image = '';
                 if (!empty($row['gambar'])) {
-                    // Check if the image path starts with 'uploads/'
                     if (strpos($row['gambar'], 'uploads/') === 0) {
                         $main_image = $row['gambar'];
                     } else {
@@ -171,7 +169,6 @@ if (!$result) {
     </footer>
 
     <script>
-        // Function to toggle the visibility of the dropdown menu
         function toggleDropdown() {
             const dropdownMenu = document.getElementById("dropdownMenu");
             if (dropdownMenu.style.display === "flex") {
@@ -181,7 +178,6 @@ if (!$result) {
             }
         }
 
-        // Close the dropdown menu when clicking outside
         document.addEventListener("click", function(e) {
             const dropdown = document.getElementById("dropdownMenu");
             const trigger = document.querySelector(".nav-item-with-icon");
