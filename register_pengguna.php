@@ -34,15 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (mysqli_stmt_num_rows($stmt_check) > 0) {
                 $error_message = "Email sudah terdaftar. Gunakan email lain.";
             } else {
-                $role = "peserta"; // Role default 'peserta'
-                // Jika email belum terdaftar, masukkan data pengguna baru
+                $role = "peserta";
                 $sql = "INSERT INTO akun (username, nama, email, password, nomor_telepon, tanggal_lahir, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 $stmt = mysqli_prepare($koneksi, $sql);
                 mysqli_stmt_bind_param($stmt, "sssssss", $username, $nama, $email, $password_hash, $nomor_telepon, $tanggal_lahir, $role);
 
                 if (mysqli_stmt_execute($stmt)) {
-                    // Ambil data pengguna yang baru didaftarkan
-                    $user_id = mysqli_insert_id($koneksi); // Ambil ID pengguna yang baru
+                    $user_id = mysqli_insert_id($koneksi);
                     $_SESSION['user'] = [
                         'id' => $user_id,
                         'username' => $username,
@@ -239,6 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="nav-header" role="navigation" aria-label="Main navigation">
         <div class="brand-logo">YaHaYu</div>
 
+        <!-- Hamburger Menu -->
         <div class="hamburger" onclick="toggleMobileMenu()">
             <span></span>
             <span></span>
@@ -248,20 +247,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="nav-menu" id="navMenu">
             <a href="index.php" class="nav-item">Home</a>
             <div class="nav-item-with-icon" onclick="toggleDropdown(event)">
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c071fa65bfd4b98a705604af764ed18d0bca0822702f81df44640ac5a4aeb87d?placeholderIfAbsent=true&apiKey=820f30d49f024d318c8b29f3eaf6b5a7" class="nav-icon" alt="" aria-hidden="true" />
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c071fa65bfd4b98a705604af764ed18d0bca0822702f81df44640ac5a4aeb87d" class="nav-icon" alt="" />
                 <span class="nav-text">Destinations</span>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="Beaches/Beaches.html" class="dropdown-item">Beaches</a>
-                    <a href="Deserts/Deserts.html" class="dropdown-item">Deserts</a>
-                    <a href="Waterfalls/Waterfalls.html" class="dropdown-item">Waterfalls</a>
-                    <a href="CulturalSites/CulturalSites.html" class="dropdown-item">Cultural Sites</a>
-                    <a href="Mountains/Mountains.html" class="dropdown-item">Mountains</a>
+                <div class="dropdown-menu" id="dropdownMenu" role="menu">
+                    <a href="beaches.php?category=pantai" class="dropdown-item" role="menuitem">Beaches</a>
+                    <a href="deserts.php?category=gurun" class="dropdown-item" role="menuitem">Deserts</a>
+                    <a href="waterfalls.php?category=air terjun" class="dropdown-item" role="menuitem">Waterfalls</a>
+                    <a href="cultural-sites.php?category=Cultural Sites" class="dropdown-item" role="menuitem">Cultural Sites</a>
+                    <a href="mountains.php?category=pegunungan" class="dropdown-item" role="menuitem">Mountains</a>
                     <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                         <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
                     <?php endif; ?>
                 </div>
             </div>
-            <a href="myticket.php" class="nav-item">My Tiket</a>
+            <?php if (isset($_SESSION['user'])): ?>
+                <a href="myticket.php" class="nav-item">My Tickets</a>
+            <?php endif; ?>
         </div>
 
         <div class="button-container">
@@ -304,9 +305,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="tanggal_lahir">Tanggal Lahir</label>
                     <div class="date-group">
-                        <input type="number" name="tanggal" placeholder="Tanggal" min="1" max="31" required>
-                        <input type="number" name="bulan" placeholder="Bulan" min="1" max="12" required>
-                        <input type="number" name="tahun" placeholder="Tahun" min="1900" max="2024" required>
+                        <input type="number" name="tanggal" placeholder="Tanggal" min="1" max="31" value="<?php echo htmlspecialchars(explode('-', $profile['tanggal_lahir'])[2]); ?>" required>
+                        <input type="number" name="bulan" placeholder="Bulan" min="1" max="12" value="<?php echo htmlspecialchars(explode('-', $profile['tanggal_lahir'])[1]); ?>" required>
+                        <input type="number" name="tahun" placeholder="Tahun" min="1900" max="2024" value="<?php echo htmlspecialchars(explode('-', $profile['tanggal_lahir'])[0]); ?>" required>
                     </div>
                 </div>
 

@@ -279,11 +279,11 @@ $tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c071fa65bfd4b98a705604af764ed18d0bca0822702f81df44640ac5a4aeb87d" class="nav-icon" alt="" />
                     <span class="nav-text">Destinations</span>
                     <div class="dropdown-menu" id="dropdownMenu" role="menu">
-                        <a href="beaches.php?category=beaches" class="dropdown-item" role="menuitem">Beaches</a>
-                        <a href="destinations.php?category=Deserts" class="dropdown-item" role="menuitem">Deserts</a>
-                        <a href="destinations.php?category=air terjun" class="dropdown-item" role="menuitem">Waterfalls</a>
-                        <a href="destinations.php?category=Cultural Sites" class="dropdown-item" role="menuitem">Cultural Sites</a>
-                        <a href="destinations.php?category=Mountains" class="dropdown-item" role="menuitem">Mountains</a>
+                        <a href="beaches.php?category=pantai" class="dropdown-item" role="menuitem">Beaches</a>
+                        <a href="deserts.php?category=gurun" class="dropdown-item" role="menuitem">Deserts</a>
+                        <a href="waterfalls.php?category=air terjun" class="dropdown-item" role="menuitem">Waterfalls</a>
+                        <a href="cultural-sites.php?category=Cultural Sites" class="dropdown-item" role="menuitem">Cultural Sites</a>
+                        <a href="mountains.php?category=pegunungan" class="dropdown-item" role="menuitem">Mountains</a>
                         <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                             <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
                         <?php endif; ?>
@@ -296,11 +296,13 @@ $tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
             <div class="button-container">
                 <?php if (isset($_SESSION['user'])): ?>
-                    <div class="buttonL">
-                        <a href="profile.php">Profile</a>
-                    </div>
                     <div class="buttonR">
                         <a href="logout.php">Logout</a>
+                    </div>
+                    <div class="buttonP">
+                        <a href="profile.php">
+                            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_picture']); ?>" alt="Profile" class="profile-icon">
+                        </a>
                     </div>
                 <?php else: ?>
                     <div class="buttonL">

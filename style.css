@@ -108,8 +108,6 @@ body {
 
 .buttonL a,
 .buttonR a {
-  text-decoration: none;
-  color: rgb(255, 223, 0);
   font-weight: bold;
 }
 
@@ -124,6 +122,19 @@ body {
 .buttonL:hover,
 .buttonR:hover {
   transform: scale(1.05);
+}
+
+/* Profile Icon */
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #fff;
+}
+
+.buttonP img {
+  display: inline-block;
 }
 
 .nav-item:hover {
@@ -242,7 +253,7 @@ body {
 }
 
 .about-heading {
-  color: rgba(30, 140, 69, 1); /* Hijau khas Brasil */
+  color: rgba(30, 140, 69, 1);
   margin-bottom: 1rem;
   font-size: 2rem;
 }
@@ -516,6 +527,36 @@ body {
 .buttonL:hover,
 .buttonR:hover {
   transform: scale(1.05);
+}
+
+/* Profile Icon */
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #fff;
+}
+
+.buttonP a {
+  display: inline-block;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.buttonP img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.buttonP img:hover {
+  transform: scale(1.1);
 }
 
 /* Style  hover  nav item */

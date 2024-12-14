@@ -56,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             align-items: center;
             min-height: 100vh;
             padding-top: 80px;
-            /* Space for fixed navbar */
             background: url('background.png') no-repeat center center;
             background-size: cover;
         }
@@ -222,20 +221,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="nav-menu" id="navMenu">
             <a href="index.php" class="nav-item">Home</a>
             <div class="nav-item-with-icon" onclick="toggleDropdown(event)">
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c071fa65bfd4b98a705604af764ed18d0bca0822702f81df44640ac5a4aeb87d?placeholderIfAbsent=true&apiKey=820f30d49f024d318c8b29f3eaf6b5a7" class="nav-icon" alt="" aria-hidden="true" />
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c071fa65bfd4b98a705604af764ed18d0bca0822702f81df44640ac5a4aeb87d" class="nav-icon" alt="" />
                 <span class="nav-text">Destinations</span>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="Beaches/Beaches.html" class="dropdown-item">Beaches</a>
-                    <a href="Deserts/Deserts.html" class="dropdown-item">Deserts</a>
-                    <a href="Waterfalls/Waterfalls.html" class="dropdown-item">Waterfalls</a>
-                    <a href="CulturalSites/CulturalSites.html" class="dropdown-item">Cultural Sites</a>
-                    <a href="Mountains/Mountains.html" class="dropdown-item">Mountains</a>
+                <div class="dropdown-menu" id="dropdownMenu" role="menu">
+                    <a href="beaches.php?category=pantai" class="dropdown-item" role="menuitem">Beaches</a>
+                    <a href="deserts.php?category=gurun" class="dropdown-item" role="menuitem">Deserts</a>
+                    <a href="waterfalls.php?category=air terjun" class="dropdown-item" role="menuitem">Waterfalls</a>
+                    <a href="cultural-sites.php?category=Cultural Sites" class="dropdown-item" role="menuitem">Cultural Sites</a>
+                    <a href="mountains.php?category=pegunungan" class="dropdown-item" role="menuitem">Mountains</a>
                     <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                         <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
                     <?php endif; ?>
                 </div>
             </div>
-            <a href="myticket.php" class="nav-item">My Tiket</a>
+            <?php if (isset($_SESSION['user'])): ?>
+                <a href="myticket.php" class="nav-item">My Tickets</a>
+            <?php endif; ?>
         </div>
 
         <div class="button-container">

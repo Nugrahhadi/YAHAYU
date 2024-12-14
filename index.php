@@ -6,7 +6,26 @@ if (!$koneksi) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
 
-$query = "SELECT * FROM destinasi LIMIT 5";
+if (isset($_SESSION['user'])) {
+    $user_id = $_SESSION['user']['id'];
+    $query = "SELECT foto_profil FROM akun WHERE id = ?";
+    $stmt = mysqli_prepare($koneksi, $query);
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $user = mysqli_fetch_assoc($result);
+
+    $profile_folder = "uploads/profile/";
+    $profile_image = "images/default-avatar.jpg"; 
+
+    if (!empty($user['foto_profil']) && file_exists($profile_folder . $user['foto_profil'])) {
+        $profile_image = $profile_folder . $user['foto_profil'];
+    }
+    $_SESSION['user']['profile_picture'] = $profile_image;
+}
+
+
+$query = "SELECT * FROM destinasi LIMIT 3";
 $result = mysqli_query($koneksi, $query);
 
 if (!$result) {
@@ -323,11 +342,13 @@ if (!$result) {
 
             <div class="button-container">
                 <?php if (isset($_SESSION['user'])): ?>
-                    <div class="buttonL">
-                        <a href="profile.php">Profile</a>
-                    </div>
                     <div class="buttonR">
                         <a href="logout.php">Logout</a>
+                    </div>
+                    <div class="buttonP">
+                        <a href="profile.php">
+                            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_picture']); ?>" alt="Profile" class="profile-icon">
+                        </a>
                     </div>
                 <?php else: ?>
                     <div class="buttonL">

@@ -2,11 +2,9 @@
 session_start();
 include("koneksi.php");
 
-// Pastikan ID destinasi diterima melalui URL
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Query untuk mengambil data destinasi berdasarkan ID
     $query = "SELECT * FROM destinasi WHERE id = ?";
     $stmt = mysqli_prepare($koneksi, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);

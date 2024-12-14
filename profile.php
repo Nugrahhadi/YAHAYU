@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
 
 $user_id = $_SESSION['user']['id'];
 
-$query = "SELECT username, nama, email, nomor_telepon, tanggal_lahir FROM akun WHERE id = ?";
+$query = "SELECT username, nama, email, nomor_telepon, tanggal_lahir, foto_profil FROM akun WHERE id = ?";
 $stmt = mysqli_prepare($koneksi, $query);
 mysqli_stmt_bind_param($stmt, "i", $user_id);
 mysqli_stmt_execute($stmt);
@@ -61,24 +61,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #367B54;
             font-size: 48px;
             font-weight: bold;
+            margin-bottom: 20px;
+            margin-top: 10px;
             text-align: center;
-            margin-bottom: 40px;
         }
 
         /* Profile container */
         .profile-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             gap: 40px;
+            padding: 40px;
             align-items: flex-start;
-            padding: 20px;
-            padding-top: 100px;
         }
 
-        /* Profile image section */
         .profile-image-section {
-            flex: 0 0 300px;
+            flex: 0 0 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .profile-image-section h1 {
@@ -86,50 +88,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .profile-image {
-            width: 300px;
-            height: 300px;
+            width: 350px;
+            height: 350px;
             border-radius: 25px;
             overflow: hidden;
+            margin-bottom: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            margin-top: -30px;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.02);
         }
 
         .profile-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
-        /* Profile details section */
+        .profile-image img:hover {
+            transform: scale(1.05);
+        }
+
         .profile-details {
             flex: 1;
-            background-color: #FFCC00;
+            background-color: rgba(255, 204, 0, 0.3);
             border-radius: 25px;
             padding: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
         }
 
         .detail-item {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .detail-item:hover {
+            transform: translateX(10px);
         }
 
         .detail-label {
             color: #367B54;
             font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
         .detail-value {
             color: #367B54;
             font-size: 16px;
-            padding: 8px 0;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px 15px;
+            border-radius: 8px;
         }
 
         /* profile button */
         .edit-profile-btn {
-            background-color: #1e8c45;
+            background-color: #367B54;
             color: white;
             padding: 12px 30px;
             border: none;
@@ -137,16 +153,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
             float: right;
+            transition: background-color 0.3s;
         }
 
         .edit-profile-btn:hover {
             background-color: #2a6043;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(54, 123, 84, 0.3);
         }
 
-        /* Success and error messages */
         .success-message,
         .error-message {
             max-width: 1000px;
@@ -168,7 +184,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #f5c6cb;
         }
 
-        /* form styles */
         .edit-form {
             max-width: 1000px;
             margin: 0 auto;
@@ -194,6 +209,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #367B54;
             border-radius: 8px;
             font-size: 16px;
+        }
+
+        .change-photo-btn {
+            width: 100%;
+            background-color: #367B54;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .change-photo-btn:hover {
+            background-color: #2a6043;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(54, 123, 84, 0.2);
+        }
+
+        .upload-form {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Button delete foto */
+        .delete-photo-btn {
+            width: 100%;
+            background-color: #d9534f;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .delete-photo-btn:hover {
+            background-color: #c9302c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(217, 53, 45, 0.2);
         }
 
         /* Responsive design */
@@ -268,8 +327,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main>
         <main>
             <?php if (isset($_GET['success'])): ?>
-                <div class="success-message" id="successAlert">
+                <div class="success-message" id="successAlert1">
                     <p>Profil berhasil diperbarui!</p>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_GET['success']) && $_GET['success'] == '2'): ?>
+                <div class="success-message" id="successAlert2">
+                    <p>Foto profil berhasil diperbarui!</p>
                 </div>
             <?php endif; ?>
 
@@ -283,8 +348,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="profile-image-section">
                     <h1 class="profile-title">PROFIL</h1>
                     <div class="profile-image">
-                        <img src="images/default-profile.jpg" alt="Profile Picture">
+                        <img src="<?php echo !empty($profile['foto_profil']) ? htmlspecialchars($profile['foto_profil']) : 'images/default-avatar.png'; ?>"
+                            alt="Profile Picture">
                     </div>
+                    <form action="update_profile_picture.php" method="POST" enctype="multipart/form-data" class="upload-form">
+                        <input type="file" name="profile_picture" id="profile_picture" accept="image/*" style="display: none;">
+                        <button type="button" onclick="document.getElementById('profile_picture').click()" class="change-photo-btn">
+                            Ganti Foto Profil
+                        </button>
+                        <button type="submit" name="delete_photo" value="1" class="delete-photo-btn">
+                            Hapus Foto Profil
+                        </button>
+                    </form>
                 </div>
 
                 <div class="profile-details">
@@ -382,17 +457,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <script src="main.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const successAlert = document.getElementById('successAlert');
-                if (successAlert) {
-                    setTimeout(function() {
-                        successAlert.style.opacity = '0';
+                const successAlert1 = document.getElementById('successAlert1');
+                const successAlert2 = document.getElementById('successAlert2');
+
+                function hideAlert(alertElement) {
+                    if (alertElement) {
                         setTimeout(function() {
-                            successAlert.style.display = 'none';
-                            const url = new URL(window.location.href);
-                            url.searchParams.delete('success');
-                            window.history.replaceState({}, '', url);
-                        }, 200);
-                    }, 2000);
+                            alertElement.style.opacity = '0';
+                            setTimeout(function() {
+                                alertElement.style.display = 'none';
+                                const url = new URL(window.location.href);
+                                url.searchParams.delete('success');
+                                window.history.replaceState({}, '', url);
+                            }, 200);
+                        }, 1000);
+                    }
+                }
+
+                hideAlert(successAlert1);
+                hideAlert(successAlert2);
+            });
+
+            document.getElementById('profile_picture').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.profile-image img').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+
+                    this.closest('form').submit();
                 }
             });
         </script>

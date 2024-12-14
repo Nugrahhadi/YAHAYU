@@ -122,26 +122,38 @@ if (!$booking) {
 
         .buttons {
             display: flex;
+            justify-content: space-between;
             gap: 15px;
             margin-top: 20px;
         }
 
-        .print-button {
-            background-color: #4CAF50;
+        .print-button,
+        .home-button {
             color: white;
-            padding: 15px 30px;
+            padding: 12px 0;
             border: none;
             border-radius: 8px;
             text-decoration: none;
-            display: block;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: 16px;
             flex: 1;
             cursor: pointer;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        .print-button {
+            background-color: rgb(0, 119, 231);
         }
 
         .print-button:hover {
-            background-color: #45a049;
+            background-color: rgb(47, 132, 211);
+        }
+
+        .home-button:hover {
+            background-color: rgb(71, 122, 71);
         }
     </style>
 </head>
