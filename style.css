@@ -23,7 +23,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgb(255, 223, 0);
+  background: #ffcc00;
   position: fixed;
   width: 100%;
   top: 0;
@@ -40,7 +40,7 @@ body {
   display: flex;
   align-items: center;
   gap: 2rem;
-  background-color: rgb(255, 223, 0) !important;
+  background-color: #ffcc00 !important;
 }
 
 .nav-item {
@@ -48,7 +48,7 @@ body {
   color: #333;
   font-weight: 500;
   transition: color 0.3s;
-  background-color: rgb(255, 223, 0);
+  background-color: #ffcc00;
 }
 
 .nav-item:hover {
@@ -73,13 +73,13 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
-  background: rgb(255, 223, 0);
+  background: #ffcc00;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   padding: 0.5rem;
   flex-direction: column;
   min-width: 200px;
-  background-color: rgb(255, 223, 0);
+  background-color: #ffcc00;
 }
 
 .dropdown-item {
@@ -90,7 +90,7 @@ body {
 }
 
 .dropdown-item:hover {
-  background: rgb(255, 223, 0);
+  background: #ffcc00;
 }
 
 .button-container {
@@ -103,7 +103,7 @@ body {
   padding: 0.5rem 1.5rem;
   border-radius: 25px;
   transition: transform 0.3s;
-  background-color: rgb(255, 223, 0);
+  background-color: #ffcc00;
 }
 
 .buttonL a,
@@ -188,36 +188,10 @@ body {
   transform: scale(1.05);
 }
 
-/* Destinations Section */
-.destinations-section {
-  padding: 5rem 5%;
-  text-align: center;
-  background: rgb(255, 223, 0);
-}
-
-.destinations-title {
-  font-size: 2.5rem;
-  color: rgba(30, 140, 69, 1);
-  margin-bottom: 1rem;
-}
-
-.destinations-subtitle {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-.destinations-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 /* Services Section */
 .service-section {
   padding: 5rem 5%;
-  background: rgb(255, 223, 0); /* Warna kuning yang lebih harmonis */
+  background: #ffcc00;
 }
 
 .boxes-container {
@@ -235,7 +209,7 @@ body {
 }
 
 .feature-item {
-  background: rgba(255, 223, 0, 0.8); /* Warna kuning dengan transparansi */
+  background: #ffcc00;
   padding: 2rem;
   border-radius: 15px;
   text-align: center;
@@ -255,14 +229,14 @@ body {
 
 .feature-title {
   font-size: 1.2rem;
-  color: #333; /* Tetap gelap untuk kontras */
+  color: #333;
   line-height: 1.4;
 }
 
 .about-box {
   flex: 1;
   padding: 2rem;
-  background: rgb(255, 223, 0);
+  background: #ffcc00;
   border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -427,7 +401,7 @@ body {
 
 /* Header Styles */
 .nav-header {
-  background: rgb(255, 223, 0);
+  background: #ffcc00;
   padding: 1rem 5%;
   position: fixed;
   width: 100%;
@@ -562,7 +536,7 @@ body {
 }
 
 .nav-item-with-icon:hover .nav-text {
-  color: white; /* Memastikan teks juga berubah menjadi putih */
+  color: white;
 }
 
 /* Hero Section */
@@ -580,7 +554,6 @@ body {
 
 .hero-content {
   text-align: center;
-  /* color: white; */
   padding: 2rem;
   max-width: 800px;
 }
@@ -620,24 +593,10 @@ body {
   transform: scale(1.05);
 }
 
-/* Destinations Section */
-.destinations-section {
-  padding: 5rem 5%;
-  text-align: center;
-}
-
-.destinations-image {
-  max-width: 100%;
-  height: auto;
-  margin-top: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
 /* Service Section */
 .service-section {
   padding: 5rem 5%;
-  background: rgb(255, 223, 0);
+  background: #ffcc00;
 }
 
 .boxes-container {
@@ -655,7 +614,7 @@ body {
 }
 
 .feature-item {
-  background: rgb(255, 223, 0);
+  background: #ffcc00;
   padding: 2rem;
   border-radius: 15px;
   text-align: center;

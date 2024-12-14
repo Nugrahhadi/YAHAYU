@@ -87,9 +87,30 @@ if (isset($_POST['submit'])) {
                     }
 
                     if ($success) {
+                        $redirect_page = '';
+                        switch ($kategori) {
+                            case 'pantai':
+                                $redirect_page = 'beaches.php';
+                                break;
+                            case 'gurun':
+                                $redirect_page = 'deserts.php';
+                                break;
+                            case 'air terjun':
+                                $redirect_page = 'waterfalls.php';
+                                break;
+                            case 'Cultural Sites':
+                                $redirect_page = 'cultural-sites.php';
+                                break;
+                            case 'pegunungan':
+                                $redirect_page = 'mountains.php';
+                                break;
+                            default:
+                                $redirect_page = 'index.php';
+                        }
+
                         echo "<script>
                             alert('Destinasi berhasil ditambahkan!');
-                            window.location.href='destinations.php';
+                            window.location.href='" . $redirect_page . "';
                         </script>";
                     }
                 }
@@ -302,11 +323,11 @@ if (isset($_POST['submit'])) {
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c071fa65bfd4b98a705604af764ed18d0bca0822702f81df44640ac5a4aeb87d" class="nav-icon" alt="" />
                     <span class="nav-text">Destinations</span>
                     <div class="dropdown-menu" id="dropdownMenu" role="menu">
-                        <a href="beaches.php?category=beaches" class="dropdown-item" role="menuitem">Beaches</a>
-                        <a href="destinations.php?category=Deserts" class="dropdown-item" role="menuitem">Deserts</a>
-                        <a href="destinations.php?category=air terjun" class="dropdown-item" role="menuitem">Waterfalls</a>
-                        <a href="destinations.php?category=Cultural Sites" class="dropdown-item" role="menuitem">Cultural Sites</a>
-                        <a href="destinations.php?category=Mountains" class="dropdown-item" role="menuitem">Mountains</a>
+                        <a href="beaches.php?category=pantai" class="dropdown-item" role="menuitem">Beaches</a>
+                        <a href="deserts.php?category=gurun" class="dropdown-item" role="menuitem">Deserts</a>
+                        <a href="waterfalls.php?category=air terjun" class="dropdown-item" role="menuitem">Waterfalls</a>
+                        <a href="cultural-sites.php?category=Cultural Sites" class="dropdown-item" role="menuitem">Cultural Sites</a>
+                        <a href="mountains.php?category=pegunungan" class="dropdown-item" role="menuitem">Mountains</a>
                         <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                             <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
                         <?php endif; ?>
@@ -384,7 +405,7 @@ if (isset($_POST['submit'])) {
                         <input type="file" id="gambar_tambahan" name="gambar_tambahan[]" multiple accept="image/*" onchange="previewMultipleImages(this, 'additionalImagePreview')">
                     </div>
                     <div id="additionalImagePreview" class="image-preview"></div>
-                    <p class="preview-label">Preview will appear here</p>
+                    <!-- <p class="preview-label">Preview will appear here</p> -->
                 </div>
 
                 <button type="submit" name="submit">Add Destination</button>

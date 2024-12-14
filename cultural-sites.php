@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("koneksi.php");
+$role = isset($_SESSION['user']['role']) ? $_SESSION['user']['role'] : '';
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -23,9 +24,31 @@ if (!$result) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Beaches</title>
+    <title>Cultural Sites</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <style>
+        .button {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .delete-btn {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 
 <body>
@@ -74,7 +97,7 @@ if (!$result) {
     </header>
 
     <section class="mountain-gallery" aria-label="Mountain Gallery">
-        <h1 class="gallery-title">CULTURAL SITES</h1>
+        <h1 class="gallery-title">Cultural Sites</h1>
 
         <?php
         if (mysqli_num_rows($result) > 0):
@@ -117,7 +140,7 @@ if (!$result) {
             endwhile;
         else:
             ?>
-            <p class="no-data">No cultural sites destinations available at the moment.</p>
+            <p class="no-data">No beach destinations available at the moment.</p>
         <?php endif; ?>
     </section>
     <!-- Footer Section-->

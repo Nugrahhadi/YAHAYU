@@ -24,7 +24,7 @@ if (!$result) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Beaches</title>
+    <title>Waterfalls</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <style>
@@ -97,7 +97,7 @@ if (!$result) {
     </header>
 
     <section class="mountain-gallery" aria-label="Mountain Gallery">
-        <h1 class="gallery-title">WATERFALLS</h1>
+        <h1 class="gallery-title">Waterfalls</h1>
 
         <?php
         if (mysqli_num_rows($result) > 0):
@@ -140,7 +140,7 @@ if (!$result) {
             endwhile;
         else:
             ?>
-            <p class="no-data">No waterfalls destinations available at the moment.</p>
+            <p class="no-data">No beach destinations available at the moment.</p>
         <?php endif; ?>
     </section>
     <!-- Footer Section-->
@@ -158,7 +158,7 @@ if (!$result) {
             <div class="links-section">
                 <div class="links-column">
                     <h3>Quick Links</h3>
-                    <a href="#home">Home</a>
+                    <a href="index.php">Home</a>
                     <a href="#top-destinations">Top Destinations</a>
                     <a href="#discover">Discover</a>
                     <a href="#contact">Contact Us</a>

@@ -56,19 +56,29 @@ $gambar_tambahan = mysqli_fetch_all($result_gambar, MYSQLI_ASSOC);
                         <a href="waterfalls.php" class="dropdown-item" role="menuitem">Waterfalls</a>
                         <a href="cultural-sites.php" class="dropdown-item" role="menuitem">Cultural Sites</a>
                         <a href="mountains.php" class="dropdown-item" role="menuitem">Mountains</a>
-                        <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
+                        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+                            <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <a href="myticket.php" class="nav-item">My Tiket</a>
             </div>
             <div class="button-container">
-                <div class="buttonL">
-                    <a href="login.php">Login</a>
-                </div>
-
-                <div class="buttonR">
-                    <a href="register_pengguna.php">Sign Up</a>
-                </div>
+                <?php if (isset($_SESSION['user'])): ?>
+                    <div class="buttonL">
+                        <a href="profile.php">Profile</a>
+                    </div>
+                    <div class="buttonR">
+                        <a href="logout.php">Logout</a>
+                    </div>
+                <?php else: ?>
+                    <div class="buttonL">
+                        <a href="login.php">Login</a>
+                    </div>
+                    <div class="buttonR">
+                        <a href="register_pengguna.php">Sign Up</a>
+                    </div>
+                <?php endif; ?>
             </div>
         </nav>
     </header>
