@@ -212,15 +212,15 @@ if (isset($_POST['process_payment'])) {
                 <h3>Pilih Metode Pembayaran</h3>
 
                 <div class="payment-option" onclick="selectPayment('bca')">
-                    <img src="path/to/bca-logo.png" alt="BCA"> Transfer Bank BCA
+                    <img src="uploads/bank/BCA.png" alt="BCA"> Transfer Bank BCA
                 </div>
 
                 <div class="payment-option" onclick="selectPayment('mandiri')">
-                    <img src="path/to/mandiri-logo.png" alt="Mandiri"> Transfer Bank Mandiri
+                    <img src="uploads/bank/mandiri.png" alt="Mandiri"> Transfer Bank Mandiri
                 </div>
 
                 <div class="payment-option" onclick="selectPayment('bni')">
-                    <img src="path/to/bni-logo.png" alt="BNI"> Transfer Bank BNI
+                    <img src="uploads/bank/bni.png" alt="BNI"> Transfer Bank BNI
                 </div>
 
                 <div id="bca-details" class="payment-details">
@@ -296,7 +296,7 @@ if (isset($_POST['process_payment'])) {
                 alert('Nomor rekening berhasil disalin!');
             });
         }
-        
+
         document.getElementById('paymentForm').onsubmit = function(e) {
             if (!selectedPayment) {
                 e.preventDefault();
