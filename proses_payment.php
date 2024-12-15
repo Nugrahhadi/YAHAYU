@@ -212,7 +212,7 @@ if (isset($_POST['process_payment'])) {
                 <h3>Pilih Metode Pembayaran</h3>
 
                 <div class="payment-option" onclick="selectPayment('bca')">
-                    <img src="uploads/bank/BCA.png" alt="BCA"> Transfer Bank BCA
+                    <img src="uploads/bank/bca.png" alt="BCA"> Transfer Bank BCA
                 </div>
 
                 <div class="payment-option" onclick="selectPayment('mandiri')">
