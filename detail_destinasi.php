@@ -36,7 +36,7 @@ $gambar_tambahan = mysqli_fetch_all($result_gambar, MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($destinasi['nama_destinasi']); ?> - YaHaYu</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="detail_destinasi.css">
+    <link rel="stylesheet" href="test.css">
 </head>
 
 <body>
@@ -61,13 +61,16 @@ $gambar_tambahan = mysqli_fetch_all($result_gambar, MYSQLI_ASSOC);
                 </div>
                 <a href="myticket.php" class="nav-item">My Tiket</a>
             </div>
+
             <div class="button-container">
                 <?php if (isset($_SESSION['user'])): ?>
-                    <div class="buttonL">
-                        <a href="profile.php">Profile</a>
-                    </div>
                     <div class="buttonR">
                         <a href="logout.php">Logout</a>
+                    </div>
+                    <div class="buttonP">
+                        <a href="profile.php">
+                            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_picture']); ?>" alt="Profile" class="profile-icon">
+                        </a>
                     </div>
                 <?php else: ?>
                     <div class="buttonL">

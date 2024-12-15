@@ -487,7 +487,7 @@ if (!$result) {
                     <a href="beaches.php">Beaches</a>
                     <a href="deserts.php">Deserts</a>
                     <a href="waterfalls.php">Waterfalls</a>
-                    <a href="culturalSites.php">Cultural Sites</a>
+                    <a href="cultural-sites.php">Cultural Sites</a>
                     <a href="mountains.php">Mountains</a>
                 </div>
 

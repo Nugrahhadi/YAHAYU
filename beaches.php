@@ -55,34 +55,43 @@ if (!$result) {
     <header class="hero">
         <nav class="nav-header" role="navigation" aria-label="Main navigation">
             <div class="brand-logo">YaHaYu</div>
-            <div class="nav-menu">
+
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="nav-menu" id="navMenu">
                 <a href="index.php" class="nav-item">Home</a>
-                <div class="nav-item-with-icon" onclick="toggleDropdown()">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c071fa65bfd4b98a705604af764ed18d0bca0822702f81df44640ac5a4aeb87d?placeholderIfAbsent=true&apiKey=820f30d49f024d318c8b29f3eaf6b5a7"
-                        class="nav-icon"
-                        alt=""
-                        aria-hidden="true" />
+                <div class="nav-item-with-icon" onclick="toggleDropdown(event)">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c071fa65bfd4b98a705604af764ed18d0bca0822702f81df44640ac5a4aeb87d" class="nav-icon" alt="" />
                     <span class="nav-text">Destinations</span>
                     <div class="dropdown-menu" id="dropdownMenu" role="menu">
-                        <a href="beaches.php" class="dropdown-item" role="menuitem">Beaches</a>
-                        <a href="deserts.php" class="dropdown-item" role="menuitem">Deserts</a>
-                        <a href="waterfalls.php" class="dropdown-item" role="menuitem">Waterfalls</a>
-                        <a href="cultural-sites.php" class="dropdown-item" role="menuitem">Cultural Sites</a>
-                        <a href="mountains.php" class="dropdown-item" role="menuitem">Mountains</a>
+                        <a href="beaches.php?category=pantai" class="dropdown-item" role="menuitem">Beaches</a>
+                        <a href="deserts.php?category=gurun" class="dropdown-item" role="menuitem">Deserts</a>
+                        <a href="waterfalls.php?category=air terjun" class="dropdown-item" role="menuitem">Waterfalls</a>
+                        <a href="cultural-sites.php?category=Cultural Sites" class="dropdown-item" role="menuitem">Cultural Sites</a>
+                        <a href="mountains.php?category=pegunungan" class="dropdown-item" role="menuitem">Mountains</a>
                         <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                             <a href="add_destinasi.php" class="dropdown-item" role="menuitem">Add Destination</a>
                         <?php endif; ?>
                     </div>
                 </div>
-                <a href="myticket.php" class="nav-item">My Tiket</a>
+                <?php if (isset($_SESSION['user'])): ?>
+                    <a href="myticket.php" class="nav-item">My Tickets</a>
+                <?php endif; ?>
             </div>
+
             <div class="button-container">
                 <?php if (isset($_SESSION['user'])): ?>
-                    <div class="buttonL">
-                        <a href="profile.php">Profile</a>
-                    </div>
                     <div class="buttonR">
                         <a href="logout.php">Logout</a>
+                    </div>
+                    <div class="buttonP">
+                        <a href="profile.php">
+                            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_picture']); ?>" alt="Profile" class="profile-icon">
+                        </a>
                     </div>
                 <?php else: ?>
                     <div class="buttonL">
@@ -201,21 +210,23 @@ if (!$result) {
         <p class="copyright">© 2024 YaHaYu. All Rights Reserved.</p>
     </footer>
 
+    <script src="main.js"></script>
     <script>
-        function toggleDropdown() {
-            const dropdownMenu = document.getElementById("dropdownMenu");
-            if (dropdownMenu.style.display === "flex") {
-                dropdownMenu.style.display = "none";
-            } else {
-                dropdownMenu.style.display = "flex";
+        function toggleDropdown(event) {
+            if (event) {
+                event.stopPropagation();
             }
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.toggle("active");
         }
 
+        // Event listener untuk menutup dropdown ketika klik di luar
         document.addEventListener("click", function(e) {
             const dropdown = document.getElementById("dropdownMenu");
             const trigger = document.querySelector(".nav-item-with-icon");
+
             if (!trigger.contains(e.target)) {
-                dropdown.style.display = "none";
+                dropdown.classList.remove("active");
             }
         });
     </script>
