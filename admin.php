@@ -3,7 +3,7 @@ include("koneksi.php");
 
 // Akun admin
 $admin_email = "admin@brazil.com";
-$admin_password = password_hash("admin123", PASSWORD_DEFAULT);
+$admin_password = password_hash("Admin123_", PASSWORD_DEFAULT);
 $role = "admin";
 $username = "admin";
 $nama = "Admin Utama";

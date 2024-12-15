@@ -14,7 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bulan = $_POST['bulan'];
     $tahun = $_POST['tahun'];
 
-    if (!checkdate($bulan, $tanggal, $tahun)) {
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $password)) {
+        $error_message = "Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus dengan minimal 8 karakter.";
+    } else if (!checkdate($bulan, $tanggal, $tahun)) {
         $error_message = "Tanggal lahir tidak valid!";
     } else {
         $tanggal_lahir = $tahun . '-' . str_pad($bulan, 2, '0', STR_PAD_LEFT) . '-' . str_pad($tanggal, 2, '0', STR_PAD_LEFT);
@@ -198,6 +200,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #dc3545;
             font-size: 0.85rem;
             margin-top: 0.5rem;
+            display: none;
+        }
+
+        .password-requirements {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
         }
 
 
@@ -315,15 +324,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="password">Password</label>
                     <div class="password-container">
                         <input type="password" id="password" name="password" required>
+                        <span class="error-message" id="passwordError"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="confirm_password">Konfirmasi Password</label>
                     <div class="password-container">
-                        <input type="password" id="confirm_password" name="confirm_password" required>
+                        <input type="password" id="confirm-password" name="confirm_password" required>
+                        <span class="error-message" id="confirmError"></span>
                     </div>
-                    <span class="error-message" id="confirmError"></span>
                 </div>
 
                 <button type="submit" class="register-btn">Create Account</button>
@@ -334,6 +344,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirm-password');
+            const passwordError = document.getElementById('passwordError');
+            const confirmError = document.getElementById('confirmError');
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+            function validatePassword() {
+                const isValid = passwordRegex.test(password.value);
+                if (!isValid) {
+                    passwordError.textContent = 'Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus';
+                    passwordError.style.display = 'block';
+                } else {
+                    passwordError.style.display = 'none';
+                }
+                return isValid;
+            }
+
+            function validateConfirmPassword() {
+                const matches = password.value === confirmPassword.value;
+                if (!matches) {
+                    confirmError.textContent = 'Password tidak cocok';
+                    confirmError.style.display = 'block';
+                } else {
+                    confirmError.style.display = 'none';
+                }
+                return matches;
+            }
+
+            password.addEventListener('input', validatePassword);
+            confirmPassword.addEventListener('input', validateConfirmPassword);
+
+            form.addEventListener('submit', function(event) {
+                const isPasswordValid = validatePassword();
+                const isConfirmValid = validateConfirmPassword();
+
+                if (!isPasswordValid || !isConfirmValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

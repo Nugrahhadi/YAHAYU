@@ -145,7 +145,6 @@ document
       errorMessage.style.display = "block";
     } else {
       errorMessage.style.display = "none";
-      // Here you would typically handle the login API call
       window.location.href = "index.html"; // Redirect to home page
     }
   });
@@ -210,7 +209,7 @@ document
 
     if (isValid) {
       // Here you would typically handle the registration API call
-      window.location.href = "Login.html";
+      window.location.href = "login.php";
     }
   });
 

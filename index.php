@@ -16,7 +16,7 @@ if (isset($_SESSION['user'])) {
     $user = mysqli_fetch_assoc($result);
 
     $profile_folder = "uploads/profile/";
-    $profile_image = "images/default-avatar.jpg"; 
+    $profile_image = "images/default-avatar.jpg";
 
     if (!empty($user['foto_profil']) && file_exists($profile_folder . $user['foto_profil'])) {
         $profile_image = $profile_folder . $user['foto_profil'];

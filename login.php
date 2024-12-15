@@ -26,11 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'role' => $row['role'],
                 ];
 
-                // Redirect ke halaman utama
                 header("Location: index.php");
-                exit;
+                exit();
             } else {
-                $error_message = "Password salah.";
+                $error_message = "Password yang Anda masukkan salah.";
             }
         } else {
             $error_message = "Email tidak ditemukan.";
@@ -182,6 +181,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: underline;
         }
 
+        .alert-error {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media (max-width: 768px) {
             .login-container {
                 padding: 1rem;
@@ -252,18 +274,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-container">
         <div class="login-box">
             <h1>LOGIN</h1>
+            <?php if (isset($error_message)): ?>
+                <div class="alert-error">
+                    <?php echo htmlspecialchars($error_message); ?>
+                </div>
+            <?php endif; ?>
             <form action="login.php" method="POST">
-                <?php if (isset($error_message)): ?>
-                    <p class="error-message"><?php echo $error_message; ?></p>
-                <?php endif; ?>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required />
+                    <input type="email" id="email" name="email"
+                        value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
+                        placeholder="Enter your email" required />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <div class="password-container">
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+                        <input type="password" id="password" name="password"
+                            placeholder="Enter your password" required />
                     </div>
                 </div>
                 <a href="#" class="forgot-password">Forgot Password?</a>
@@ -272,6 +299,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="register-link">Don't have an account? <a href="register_pengguna.php">Register Now!</a></p>
         </div>
     </div>
+
     <script src="main.js"></script>
 </body>
 

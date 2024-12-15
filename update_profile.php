@@ -36,10 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = isset($_POST['password']) ? $_POST['password'] : '';
         $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
 
-        // Validasi password dan konfirmasi password
-        if (!empty($password) && $password !== $confirm_password) {
-            $error = "Password dan konfirmasi password tidak cocok!";
-        } else {
+        if (!empty($password)) {
+            // Regex untuk validasi password
+            if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $password)) {
+                $error = "Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus dengan minimal 8 karakter.";
+            } else if ($password !== $confirm_password) {
+                $error = "Password dan konfirmasi password tidak cocok!";
+            }
+        }
+
+        if (!isset($error)) {
             // Jika password baru diisi, enkripsi password dan update
             if (!empty($password)) {
                 $password_hashed = password_hash($password, PASSWORD_DEFAULT);
@@ -342,12 +348,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- password and confirmation -->
                 <div class="form-group">
                     <label for="password">Password Baru</label>
-                    <input type="password" id="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah password">
+                    <div class="password-container">
+                        <input type="password" id="password" name="password"
+                            placeholder="Kosongkan jika tidak ingin mengubah password">
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+                    <div class="password-requirements">
+                        Password harus mengandung minimal 8 karakter dengan kombinasi huruf besar, huruf kecil, angka, dan karakter khusus.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="confirm_password">Konfirmasi Password</label>
-                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Konfirmasi password baru">
+                    <div class="password-container">
+                        <input type="password" id="confirm_password" name="confirm_password"
+                            placeholder="Konfirmasi password baru">
+                        <span class="error-message" id="confirmError"></span>
+                    </div>
                 </div>
 
                 <button type="submit" name="submit">Perbarui Profil</button>
@@ -415,6 +432,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="main.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirm_password');
+            const passwordError = document.getElementById('passwordError');
+            const confirmError = document.getElementById('confirmError');
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+            function validatePassword() {
+                if (password.value === '') return true;
+                const isValid = passwordRegex.test(password.value);
+                if (!isValid) {
+                    passwordError.textContent = 'Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus';
+                    passwordError.style.display = 'block';
+                } else {
+                    passwordError.style.display = 'none';
+                }
+                return isValid;
+            }
+
+            function validateConfirmPassword() {
+                if (password.value === '') return true;
+                const matches = password.value === confirmPassword.value;
+                if (!matches) {
+                    confirmError.textContent = 'Password tidak cocok';
+                    confirmError.style.display = 'block';
+                } else {
+                    confirmError.style.display = 'none';
+                }
+                return matches;
+            }
+
+            password.addEventListener('input', validatePassword);
+            confirmPassword.addEventListener('input', validateConfirmPassword);
+
+            form.addEventListener('submit', function(event) {
+                if (password.value !== '') {
+                    const isPasswordValid = validatePassword();
+                    const isConfirmValid = validateConfirmPassword();
+
+                    if (!isPasswordValid || !isConfirmValid) {
+                        event.preventDefault();
+                    }
+                }
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const successAlert = document.getElementById('successAlert');
             if (successAlert) {
